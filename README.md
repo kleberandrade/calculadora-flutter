@@ -1,6 +1,6 @@
 # Calculadora
 
-Aplicativo de uma calculadora simples para disciplina de Programação Mobile.
+Aplicativo de uma calculadora simples para disciplina de Programação Mobile, criado por Kleber de Oliveira Andrade
 
 Tutorial de criação deste app: http://bit.ly/3amM3EK
 
