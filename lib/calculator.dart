@@ -9,19 +9,19 @@ class Calculator extends StatefulWidget {
 }
 
 class _CalculatorState extends State<Calculator> {
-
   final _memory = Memory();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.black,
         title: Text('Calculadora'),
-        elevation: 0.0,
       ),
       body: Column(
         children: <Widget>[
           _buildDisplay(),
+          Divider(height: 0.1),
           _buildKeyboard(),
         ],
       ),
@@ -32,7 +32,7 @@ class _CalculatorState extends State<Calculator> {
     return Expanded(
       flex: 1,
       child: Container(
-        color: Theme.of(context).primaryColor,
+        color: Colors.black,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.end,
           crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -60,32 +60,29 @@ class _CalculatorState extends State<Calculator> {
   }
 
   Widget _buildKeyboardButton(String label,
-      {int flex = 1, Color bgColor, Color textColor}) {
+      {int flex = 1, Color textColor = Colors.white, Color backgroundColor = Colors.black}) {
     return Expanded(
       flex: flex,
-      child: Padding(
-        padding: const EdgeInsets.all(1.0),
-        child: RaisedButton(
-          color: bgColor,
-          textColor: textColor,
-          child: Text(
-            label,
-            style: TextStyle(fontSize: 24),
-          ),
-          onPressed: (){
-            setState(() {
-              _memory.applyCommand(label);
-            });
-          },
+      child: RaisedButton(
+        color: backgroundColor,
+        textColor: textColor,
+        child: Text(
+          label,
+          style: TextStyle(fontSize: 24),
         ),
+        onPressed: () {
+          setState(() {
+            _memory.applyCommand(label);
+          });
+        },
       ),
     );
   }
 
   Widget _buildKeyboard() {
     return Container(
-      color: Theme.of(context).primaryColor,
-      height: 450.0,
+      color: Colors.black,
+      height: 400.0,
       child: Column(
         children: <Widget>[
           Expanded(
@@ -93,12 +90,10 @@ class _CalculatorState extends State<Calculator> {
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: <Widget>[
-                _buildKeyboardButton('AC',
-                    flex: 2, bgColor: Colors.teal[400], textColor: Colors.white),
-                _buildKeyboardButton('%',
-                    bgColor: Colors.teal[400], textColor: Colors.white),
-                _buildKeyboardButton('/',
-                    bgColor: Colors.teal[900], textColor: Colors.white),
+                _buildKeyboardButton('AC', textColor: Colors.deepOrange),
+                _buildKeyboardButton('DEL', textColor: Colors.deepOrange),
+                _buildKeyboardButton('%', textColor: Colors.deepOrange),
+                _buildKeyboardButton('÷', textColor: Colors.deepOrange),
               ],
             ),
           ),
@@ -110,8 +105,7 @@ class _CalculatorState extends State<Calculator> {
                 _buildKeyboardButton('7'),
                 _buildKeyboardButton('8'),
                 _buildKeyboardButton('9'),
-                _buildKeyboardButton('*',
-                    bgColor: Colors.teal[900], textColor: Colors.white),
+                _buildKeyboardButton('x', textColor: Colors.deepOrange),
               ],
             ),
           ),
@@ -123,8 +117,7 @@ class _CalculatorState extends State<Calculator> {
                 _buildKeyboardButton('4'),
                 _buildKeyboardButton('5'),
                 _buildKeyboardButton('6'),
-                _buildKeyboardButton('+',
-                    bgColor: Colors.teal[900], textColor: Colors.white),
+                _buildKeyboardButton('+', textColor: Colors.deepOrange),
               ],
             ),
           ),
@@ -136,7 +129,7 @@ class _CalculatorState extends State<Calculator> {
                 _buildKeyboardButton('1'),
                 _buildKeyboardButton('2'),
                 _buildKeyboardButton('3'),
-                _buildKeyboardButton('-', bgColor: Colors.teal[900], textColor: Colors.white),
+                _buildKeyboardButton('-', textColor: Colors.deepOrange),
               ],
             ),
           ),
@@ -147,8 +140,7 @@ class _CalculatorState extends State<Calculator> {
               children: <Widget>[
                 _buildKeyboardButton('0', flex: 2),
                 _buildKeyboardButton('.'),
-                _buildKeyboardButton('=',
-                    bgColor: Colors.teal[900], textColor: Colors.white),
+                _buildKeyboardButton('=', textColor: Colors.white),
               ],
             ),
           ),

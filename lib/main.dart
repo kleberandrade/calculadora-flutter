@@ -13,9 +13,6 @@ class MyApp extends StatelessWidget {
     ]);
 
     return MaterialApp(
-      theme: ThemeData(
-        primarySwatch: Colors.teal,
-      ),
       debugShowCheckedModeBanner: false,
       home: Calculator(),
     );

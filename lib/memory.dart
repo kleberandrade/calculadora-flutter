@@ -23,11 +23,18 @@ class Memory {
   void applyCommand(String command) {
     if (command == 'AC') {
       _clear();
-    } else if (operations.contains(command)) {
+    } else if (command == 'DEL'){
+      deleteEndDigit();
+    } 
+    else if (operations.contains(command)) {
       _setOperation(command);
     } else {
       _addDigit(command);
     }
+  }
+
+  void deleteEndDigit(){
+    result = result.length > 1 ? result.substring(0, result.length - 1) : '0';
   }
 
   void _addDigit(String digit) {
@@ -63,9 +70,9 @@ class Memory {
     switch (_operation) {
       case '%':
         return _buffer[0] % _buffer[1];
-      case '/':
+      case '÷':
         return _buffer[0] / _buffer[1];
-      case '*':
+      case 'x':
         return _buffer[0] * _buffer[1];
       case '+':
         return _buffer[0] + _buffer[1];
