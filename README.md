@@ -18,7 +18,7 @@ Tutorial de criação deste app: http://bit.ly/3amM3EK
 
 ## Desafio para aula
 
-*   [ ] Trocar a fonte do resultado ([tutorial](https://flutter.dev/docs/cookbook/design/fonts))
+*   [ ] Trocar a fonte do resultado ([tutorial](https://flutter.dev/docs/cookbook/design/fonts) e [fonte](https://www.dafont.com/pt/calculator.font))
 *   [ ] Criar um icone para o aplicativo ([plugin flutter_launcher_icons](https://pub.dev/packages/flutter_launcher_icons), [tutorial](https://medium.com/@psyanite/how-to-add-app-launcher-icons-in-flutter-bd92b0e0873a), [gerador de icone](https://pub.dev/packages/flutter_launcher_icons))
 *   [ ] Criar uma tela de splash ([tutorial](https://morioh.com/p/98894cc3a48d))
 *   [ ] Adicionar um botão na AppBar para compartilhar o aplicativo ([IconButton](https://medium.com/@mirmahfuz/playing-with-flutter-appbar-a5362428d13d), [plugin share](https://pub.dev/packages/share))
