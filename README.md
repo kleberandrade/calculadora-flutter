@@ -2,12 +2,12 @@
 
 Aplicativo de uma calculadora simples para disciplina de Programação Mobile.
 
-Tutorial de criação deste app: http://bit.ly/2Zry7Uh
+Tutorial de criação deste app: http://bit.ly/3amM3EK
 
 <p align="center">
-    <img src="https://cdn-images-1.medium.com/max/1320/1*5IEizYATfu2XcuAwl_vA2A.png" width="250"/>
-    <img src="https://cdn-images-1.medium.com/max/1320/1*3jTzCUenotjFhGm2PxtOwA.png" width="250"/>
-    <img src="https://cdn-images-1.medium.com/max/1320/1*9ZiJvscvhEWnR-FlR_YDyQ.png" width="250"/>
+    <img src="https://miro.medium.com/max/1188/1*kSegIRDPlhO4xE8T7k9eUg.png" width="250"/>
+    <img src="https://miro.medium.com/max/1188/1*qDTmZNvLuEzG-rh63nwg9A.png" width="250"/>
+    <img src="https://miro.medium.com/max/1188/1*Ut8Dkz-UAZbqD_Vpe6uJHA.png" width="250"/>
 </p>
 
 ## Como clonar e importar
@@ -22,7 +22,7 @@ Tutorial de criação deste app: http://bit.ly/2Zry7Uh
 *   Criar um icone para o aplicativo ([plugin flutter_launcher_icons](https://pub.dev/packages/flutter_launcher_icons), [tutorial](https://medium.com/@psyanite/how-to-add-app-launcher-icons-in-flutter-bd92b0e0873a), [gerador de icone](https://pub.dev/packages/flutter_launcher_icons))
 *   Criar uma tela de splash ([tutorial](https://morioh.com/p/98894cc3a48d))
 *   Adicionar um botão na AppBar para compartilhar o aplicativo ([IconButton](https://medium.com/@mirmahfuz/playing-with-flutter-appbar-a5362428d13d), [plugin share](https://pub.dev/packages/share))
-*   Adicionar um botão na AppBar para trocar entre os temas light/dark ([plugin dynamic_theme](pub.dev/packages/dynamic_theme)) 
+*   Criar um Text em cima do resultado para exibir todas as operações realizadas (10 + 30 + 20 x 10) 
 
 ## Licença
 
