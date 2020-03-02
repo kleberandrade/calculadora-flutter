@@ -1,10 +1,9 @@
 class Memory {
   static const operations = const ['%', '/', '+', '-', '*', '='];
-
   String _operation;
+  bool _usedOperation = false;
   final _buffer = [0.0, 0.0];
   int _bufferIndex = 0;
-  bool _wipeResult = false;
 
   String result = '0';
 
@@ -17,28 +16,27 @@ class Memory {
     _buffer.setAll(0, [0.0, 0.0]);
     _bufferIndex = 0;
     _operation = null;
-    _wipeResult = false;
+    _usedOperation = false;
   }
 
   void applyCommand(String command) {
     if (command == 'AC') {
       _clear();
-    } else if (command == 'DEL'){
-      deleteEndDigit();
-    } 
-    else if (operations.contains(command)) {
+    } else if (command == 'DEL') {
+      _deleteEndDigit();
+    } else if (operations.contains(command)) {
       _setOperation(command);
     } else {
       _addDigit(command);
     }
   }
 
-  void deleteEndDigit(){
+  void _deleteEndDigit() {
     result = result.length > 1 ? result.substring(0, result.length - 1) : '0';
   }
 
   void _addDigit(String digit) {
-    if (_wipeResult) result = '0';
+    if (_usedOperation) result = '0';
 
     if (result.contains('.') && digit == '.') digit = '';
     if (result == '0' && digit != '.') result = '';
@@ -46,11 +44,11 @@ class Memory {
     result += digit;
 
     _buffer[_bufferIndex] = double.tryParse(result);
-    _wipeResult = false;
+    _usedOperation = false;
   }
 
   void _setOperation(String operation) {
-    if (_wipeResult && operation == _operation) return;
+    if (_usedOperation && operation == _operation) return;
 
     if (_bufferIndex == 0) {
       _bufferIndex = 1;
@@ -63,7 +61,7 @@ class Memory {
     result = _buffer[0].toString();
     result = result.endsWith('.0') ? result.split('.')[0] : result;
 
-    _wipeResult = true;
+    _usedOperation = true;
   }
 
   double _calculate() {
