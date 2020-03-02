@@ -140,7 +140,7 @@ class _CalculatorState extends State<Calculator> {
               children: <Widget>[
                 _buildKeyboardButton('0', flex: 2),
                 _buildKeyboardButton('.'),
-                _buildKeyboardButton('=', textColor: Colors.white),
+                _buildKeyboardButton('=', textColor: Colors.deepOrange),
               ],
             ),
           ),
