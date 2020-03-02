@@ -5,9 +5,9 @@ Aplicativo de uma calculadora simples para disciplina de Programação Mobile.
 Tutorial de criação deste app: http://bit.ly/3amM3EK
 
 <p align="center">
-    <img src="https://miro.medium.com/max/1188/1*kSegIRDPlhO4xE8T7k9eUg.png" width="250"/>
-    <img src="https://miro.medium.com/max/1188/1*qDTmZNvLuEzG-rh63nwg9A.png" width="250"/>
-    <img src="https://miro.medium.com/max/1188/1*Ut8Dkz-UAZbqD_Vpe6uJHA.png" width="250"/>
+    <img src="https://miro.medium.com/max/1188/1*lmJYUZewi8iDqJxplhsB5A.png" width="250"/>
+    <img src="https://miro.medium.com/max/1188/1*wd0_FiEC_XbBAu_FjeUBVA.png" width="250"/>
+    <img src="https://miro.medium.com/max/1188/1*28KOKtKidXh0KN3TmVpoCw.png" width="250"/>
 </p>
 
 ## Como clonar e importar
