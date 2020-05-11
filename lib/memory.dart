@@ -33,6 +33,7 @@ class Memory {
 
   void _deleteEndDigit() {
     result = result.length > 1 ? result.substring(0, result.length - 1) : '0';
+    _buffer[_bufferIndex] = double.tryParse(result);
   }
 
   void _addDigit(String digit) {
@@ -52,11 +53,15 @@ class Memory {
 
     if (_bufferIndex == 0) {
       _bufferIndex = 1;
+
+      if (operation == '=') 
+        _operation = operation;
     } else {
       _buffer[0] = _calculate();
     }
 
-    if (operation != '=') _operation = operation;
+    if (operation != '=') 
+      _operation = operation;
 
     result = _buffer[0].toString();
     result = result.endsWith('.0') ? result.split('.')[0] : result;
