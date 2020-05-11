@@ -1,5 +1,5 @@
 class Memory {
-  static const operations = const ['%', '/', '+', '-', '*', '='];
+  static const operations = const ['%', '/', '+', '-', 'x', '='];
   String _operation;
   bool _usedOperation = false;
   final _buffer = [0.0, 0.0];
@@ -68,7 +68,7 @@ class Memory {
     switch (_operation) {
       case '%':
         return _buffer[0] % _buffer[1];
-      case '÷':
+      case '/':
         return _buffer[0] / _buffer[1];
       case 'x':
         return _buffer[0] * _buffer[1];

@@ -93,7 +93,7 @@ class _CalculatorState extends State<Calculator> {
                 _buildKeyboardButton('AC', textColor: Colors.deepOrange),
                 _buildKeyboardButton('DEL', textColor: Colors.deepOrange),
                 _buildKeyboardButton('%', textColor: Colors.deepOrange),
-                _buildKeyboardButton('÷', textColor: Colors.deepOrange),
+                _buildKeyboardButton('/', textColor: Colors.deepOrange),
               ],
             ),
           ),
