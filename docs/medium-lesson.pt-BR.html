@@ -1,0 +1,188 @@
+<h1>Desenvolvimento de uma Calculadora simples com Flutter</h1>
+<h2>Notas de aula do professor Kleber de Oliveira Andrade — do estado ao resultado</h2>
+<figure><img src="https://raw.githubusercontent.com/kleberandrade/calculadora-flutter/master/docs/screenshots/medium-cover-v2.png" alt="Ilustração conceitual de uma calculadora verde com símbolos aritméticos e o título Calculadora com Flutter."><figcaption>Capa ilustrativa criada com auxílio de IA para esta aula. As capturas reais do aplicativo aparecem a seguir.</figcaption></figure>
+<p>Uma calculadora parece apenas um conjunto de botões. Mas o que deve acontecer quando alguém aperta dois operadores seguidos? E quando divide por zero, apaga um número negativo ou continua uma conta depois do resultado? Essas perguntas ajudam a aprender algo que será útil em qualquer aplicativo: transformar regras de comportamento em um domínio testável e só então conectá-lo à interface.</p>
+<p>Nesta revisão de novembro de 2026, vamos trabalhar com o projeto completo e atual, sem combinar os exemplos antigos de 2020 com APIs novas. Ao final, você terá uma calculadora sequencial com decimais, troca de sinal, módulo, teclado físico e mensagens de erro que permitem recomeçar. O código mantém a autoria e a licença MIT do projeto original.</p>
+<h2>1. Conheça o resultado antes de escrever código</h2>
+<figure><img src="https://raw.githubusercontent.com/kleberandrade/calculadora-flutter/master/docs/screenshots/calculator-web-v2.jpg" alt="Captura real da calculadora no Chrome, com notas de aula à esquerda, teclado à direita e resultado 0.3."><figcaption>Aplicativo real executado no Chrome com Flutter 3.50.0, Dart 3.14.0 e material_ui 1.11.1. Exemplo: 0.1 + 0.2 = 0.3.</figcaption></figure>
+<p>Comece experimentando três situações: 8 ÷ 2 deve resultar em 4; 8 mod 3 deve resultar em 2; e 8 ÷ 0 deve mostrar um erro sem impedir a próxima conta. Os chips de exemplo executam apenas comandos locais e não usam dados pessoais, conta de usuário ou serviços externos.</p>
+<p><strong>Regra central:</strong> a avaliação é da esquerda para a direita. A sequência 2 + 3 × 4 resulta em 20: primeiro confirmamos 2 + 3 e depois multiplicamos 5 por 4. Não há precedência de operadores nem parênteses. O símbolo % significa módulo euclidiano, não porcentagem: 8 % 3 = 2 e -8 % 3 = 1.</p>
+<h2>2. Prepare um ambiente reproduzível</h2>
+<p>A versão usada nesta aula é <strong>Flutter 3.50.0 com Dart 3.14.0</strong>. O Dart vem junto com o Flutter; não instale outra versão separadamente para este projeto. A versão está registrada em .flutter-version e no CI. Para reproduzir os testes Web, tenha também o Google Chrome instalado.</p>
+<pre>git clone https://github.com/kleberandrade/calculadora-flutter.git
+cd calculadora-flutter
+flutter --version
+flutter pub get --enforce-lockfile
+flutter run -d chrome</pre>
+<p>Execute uma linha por vez, dentro da pasta do projeto. O parâmetro enforce-lockfile verifica o conjunto de dependências já validado; não copie instruções antigas de Gradle 5.6. A configuração Android atual segue o template do Flutter 3.50: Android Gradle Plugin 9.3.1, Gradle 9.5.0 e Kotlin 2.4.20, com suporte Kotlin integrado. O Android mínimo é API 24 e o alvo iOS é 15+. Preparar SDKs, licenças e assinatura nativa é uma etapa separada da execução no Chrome.</p>
+<h2>3. Entenda o que cada package faz</h2>
+<p>O Flutter atual separou a biblioteca Material do import antigo package:flutter/material.dart. Por isso a interface usa agora o pacote oficial <a href="https://pub.dev/packages/material_ui">material_ui 1.11.1</a> e o import package:material_ui/material_ui.dart. O pacote <a href="https://pub.dev/packages/flutter_lints">flutter_lints 6.0.0</a> continua sendo a versão estável mais recente consultada; flutter_test é fornecido pelo SDK. O manifesto completo relevante para a aula é:</p>
+<pre>name: calculadora
+description: A keyboard-friendly sequential calculator for learning Flutter.
+publish_to: none
+version: 2.0.0+2
+
+environment:
+  sdk: &#x27;&gt;=3.14.0 &lt;4.0.0&#x27;
+  flutter: &#x27;&gt;=3.50.0&#x27;
+
+dependencies:
+  flutter:
+    sdk: flutter
+  material_ui: ^1.11.1
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^6.0.0
+
+flutter:
+  uses-material-design: true</pre>
+<p>Não é necessário instalar auto_size_text: o resultado usa FittedBox, já disponível na interface. Também não há dependência de rede, armazenamento ou autenticação. As versões foram resolvidas novamente com flutter pub upgrade, incluindo as dependências transitivas. O conjunto exato está em <a href="https://github.com/kleberandrade/calculadora-flutter/blob/master/pubspec.lock">pubspec.lock</a>.</p>
+<p>Para conferir todas as versões sem transformar dependências transitivas em dependências diretas, este é o inventário resolvido da aula. A indicação SDK significa que o pacote acompanha o Flutter, sem uma versão independente para escolher no pub.dev:</p>
+<pre>async: 2.13.1
+boolean_selector: 2.1.2
+characters: 1.4.1
+clock: 1.1.3
+collection: 1.19.1
+cupertino_ui: 1.1.7
+fake_async: 1.3.3
+flutter: SDK Flutter 3.50.0
+flutter_lints: 6.0.0
+flutter_localizations: SDK Flutter 3.50.0
+flutter_test: SDK Flutter 3.50.0
+intl: 0.20.3
+leak_tracker: 11.0.2
+leak_tracker_flutter_testing: 3.0.10
+leak_tracker_testing: 3.0.2
+lints: 6.1.0
+listen: 1.0.1
+matcher: 0.12.20
+material_color_utilities: 0.13.0
+material_ui: 1.11.1
+meta: 1.19.0
+path: 1.9.1
+sky_engine: SDK Flutter 3.50.0
+source_span: 1.10.2
+stack_trace: 1.12.2
+stream_channel: 2.1.4
+string_scanner: 1.4.1
+term_glyph: 1.2.2
+test_api: 0.7.14
+vector_math: 2.4.4
+vm_service: 15.4.0</pre>
+<p><strong>Limite real da atualização:</strong> material_color_utilities 0.13.0 e test_api 0.7.14 continuam fixados pelo Flutter 3.50.0. Existem 0.13.1 e 0.7.15 no catálogo, mas o SDK não aceita essa combinação. Todos os pacotes estão nas versões mais recentes que o resolvedor permite para este toolchain, sem dependency_overrides. Forçar esses dois números quebraria o contrato de dependências do SDK; atualizar não significa ignorar esse contrato.</p>
+<h2>4. Separe o domínio da interface</h2>
+<p>Há três arquivos principais: <a href="https://github.com/kleberandrade/calculadora-flutter/blob/master/lib/main.dart">main.dart</a> inicia o aplicativo e define o tema; <a href="https://github.com/kleberandrade/calculadora-flutter/blob/master/lib/calculator.dart">calculator.dart</a> apresenta a tela e traduz interações em comandos; <a href="https://github.com/kleberandrade/calculadora-flutter/blob/master/lib/memory.dart">memory.dart</a> mantém entrada, operação pendente, resultado e erro. Memory não importa Flutter. Essa separação permite testar uma conta sem abrir a tela.</p>
+<p>No domínio, uma operação é uma escolha explícita, em vez de uma string arbitrária. Este trecho é extraído do arquivo atual:</p>
+<pre>enum Operation {
+  add(&#x27;+&#x27;),
+  subtract(&#x27;-&#x27;),
+  multiply(&#x27;x&#x27;),
+  divide(&#x27;/&#x27;),
+  modulo(&#x27;%&#x27;);
+
+  const Operation(this.symbol);
+  final String symbol;
+
+  double calculate(double left, double right) =&gt; switch (this) {
+    add =&gt; left + right,
+    subtract =&gt; left - right,
+    multiply =&gt; left * right,
+    divide =&gt; left / right,
+    modulo =&gt; left % right,
+  };
+}
+
+enum EntryPhase { editing, pending, evaluated, error }</pre>
+<p>EntryPhase distingue quatro momentos. Em editing, estamos montando o operando. Em pending, já existe um operador esperando o próximo número. Em evaluated, há um resultado concluído. Em error, uma nova operação não pode continuar a partir de uma conta inválida. Saber a fase evita que repetir igual reaplique acidentalmente uma operação antiga.</p>
+<p>O método público applyCommand é a fronteira de entrada. Ele recebe um comando por vez, como 7, +, AC ou DEL. No caminho dos dígitos, aceita somente um algarismo ou ponto; texto arbitrário e expressões coladas não viram código executável. A interface também converte a vírgula do teclado para ponto. Não existe eval ou execução de texto digitado.</p>
+<h2>5. Defina as transições antes dos botões</h2>
+<p>Quando outro operador chega antes do próximo número, ele substitui o operador pendente. Ao confirmar uma etapa, o resultado passa a ser o primeiro operando da etapa seguinte. O trecho atual que registra a operação é:</p>
+<pre>void _setOperation(Operation operation) {
+    if (_phase == EntryPhase.editing &amp;&amp; _operation != null) _evaluate();
+    if (_phase == EntryPhase.error) return;
+    _left = double.parse(_result);
+    _operation = operation;
+    expression = &#x27;$_result ${operation.symbol}&#x27;;
+    _phase = EntryPhase.pending;
+  }</pre>
+<p>Um número depois de igual inicia uma nova conta. Um operador depois de igual continua o resultado. Igual sem segundo operando e igual repetido não fazem uma operação adicional. AC reinicia tudo. DEL remove um dígito durante a edição; depois de um resultado completo, limpa a entrada. O botão ± troca o sinal sem tentar interpretar o sinal de subtração como um dígito.</p>
+<p><strong>Precisão:</strong> a entrada aceita até 12 dígitos, sem contar sinal e separador. As operações usam double e o resultado confirmado é formatado com 12 algarismos significativos; a conta seguinte usa esse resultado arredondado. Assim, 0.1 + 0.2 aparece como 0.3 e 1 ÷ 3 aparece como 0.333333333333. Valores muito pequenos podem usar notação científica e, por underflow, chegar a zero. O limite de magnitude é um trilhão. Esta é uma calculadora didática, não um motor de cálculo financeiro exato.</p>
+<h2>6. Faça erros se tornarem estados recuperáveis</h2>
+<p>Dividir por zero não deve deixar Infinity no visor nem impedir a próxima interação. A verificação acontece antes da operação; módulo por zero segue a mesma regra. Depois, o domínio rejeita resultados não finitos ou além do limite. Veja a implementação atual completa dessa etapa:</p>
+<pre>void _evaluate() {
+    final operation = _operation!;
+    final right = double.parse(_result);
+    expression = &#x27;${_format(_left)} ${operation.symbol} $_result =&#x27;;
+    if (right == 0 &amp;&amp;
+        (operation == Operation.divide || operation == Operation.modulo)) {
+      _fail(&#x27;Não é possível dividir por zero.&#x27;);
+      return;
+    }
+    final value = operation.calculate(_left, right);
+    if (!value.isFinite || value.abs() &gt; 1e12) {
+      _fail(&#x27;Resultado fora do limite de 10¹².&#x27;);
+      return;
+    }
+    _result = _format(value);
+    _operation = null;
+    _phase = EntryPhase.evaluated;
+  }
+
+  void _fail(String message) {
+    error = message;
+    _operation = null;
+    _phase = EntryPhase.error;
+  }</pre>
+<p>A mensagem orienta a recuperação. Um número, AC, DEL ou troca de sinal permite começar novamente; operadores e igual não reutilizam um estado de erro. Essa decisão pertence ao domínio e por isso também é exercitada nos testes. Na interface, tanto o resultado quanto a mensagem são expostos à árvore semântica, em vez de depender apenas da cor.</p>
+<h2>7. Conecte o estado ao Material atual</h2>
+<p>O ponto de entrada abaixo é o arquivo main.dart atual. Ele usa material_ui, Material 3 e construtores constantes. Não precisa mudar a orientação da tela dentro do método build:</p>
+<pre>import &#x27;package:material_ui/material_ui.dart&#x27;;
+
+import &#x27;calculator.dart&#x27;;
+
+void main() =&gt; runApp(const MyApp());
+
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
+  @override
+  Widget build(BuildContext context) =&gt; MaterialApp(
+    title: &#x27;Calculadora&#x27;,
+    debugShowCheckedModeBanner: false,
+    theme: ThemeData(
+      useMaterial3: true,
+      colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xff176b59)),
+      scaffoldBackgroundColor: const Color(0xfff4f3ec),
+      fontFamily: &#x27;sans-serif&#x27;,
+    ),
+    home: const Calculator(),
+  );
+}</pre>
+<p>Calculator mantém uma instância de Memory. Ao apertar uma tecla, _apply chama applyCommand dentro de setState; a reconstrução lê result, expression e error. Cada botão envia um comando, sem repetir a aritmética no widget. Os detalhes do teclado estão no <a href="https://github.com/kleberandrade/calculadora-flutter/blob/master/lib/calculator.dart">fonte completo e validado</a>.</p>
+<p>O layout usa uma coluna em telas estreitas, com a calculadora antes das notas, e duas áreas lado a lado no desktop. Em telas baixas, a página rola. O resultado tem alinhamento à direita e algarismos tabulares; os alvos de toque têm pelo menos 48 pixels lógicos. O texto de apoio, o contraste e o espaçamento participam da leitura tanto quanto a paleta de cores.</p>
+<figure><img src="https://raw.githubusercontent.com/kleberandrade/calculadora-flutter/master/docs/screenshots/calculator-mobile-v2.jpg" alt="Captura real da calculadora no Chrome em viewport de 390 por 844 pixels, com teclado completo e resultado decimal."><figcaption>Layout móvel real no Chrome, em viewport de 390 × 844. A captura não representa teste em telefone físico.</figcaption></figure>
+<p>No teclado físico, Enter calcula, Esc ou Delete limpa, Backspace apaga e F9 troca o sinal. Os operadores +, -, *, / e % também funcionam; vírgula e ponto podem iniciar decimais. Tab e Espaço continuam disponíveis para navegar e ativar os controles. O foco de um botão não deve impedir o Enter de concluir uma conta.</p>
+<h2>8. Verifique comportamento, não apenas aparência</h2>
+<p>Os testes do domínio verificam resultados observáveis: operadores suportados, avaliação sequencial, decimais, sinais, limpeza, backspace, divisão/módulo por zero, comandos inválidos, limites e arredondamento. Os testes de widget exercitam toque, teclado, recuperação e layouts com texto ampliado. Estes são os comandos usados nesta revisão:</p>
+<pre>dart format --output=none --set-exit-if-changed lib test
+flutter analyze --fatal-infos
+flutter test --coverage
+flutter test --platform chrome
+flutter build web --release --no-web-resources-cdn</pre>
+<p>O build Web fica em build/web. Para conferir o resultado de produção localmente, sirva essa pasta por HTTP:</p>
+<pre>python3 -m http.server 8783 --bind 127.0.0.1 --directory build/web</pre>
+<p>Abra http://127.0.0.1:8783 no navegador. A hospedagem Web mostra preparação inicial e permite tentar novamente se a inicialização falhar ou demorar. O comando acima serve apenas neste computador; não publica um site.</p>
+<p>Nesta revisão foram validados análise estática, 15 testes Flutter, 15 testes Chrome e build Web de produção. A interface foi conferida no navegador em execução real, incluindo viewport móvel. Não foi feito teste em telefone físico nem com leitor de tela. Não há build nativo aprovado nesta revisão; as licenças Android continuam pendentes e os limites das tentativas anteriores estão no log. Acompanhe o <a href="https://github.com/kleberandrade/calculadora-flutter/blob/master/.github/workflows/flutter.yml">workflow fixado no repositório</a> e seu resultado em <a href="https://github.com/kleberandrade/calculadora-flutter/actions/workflows/flutter.yml">GitHub Actions</a>.</p>
+<h2>Recursos, autoria e material original</h2>
+<p>O <a href="https://github.com/kleberandrade/calculadora-flutter/blob/master/README.md">README em inglês</a> descreve instalação, arquitetura, precisão, migração e limites. O projeto é de Kleber de Oliveira Andrade, com <a href="https://github.com/kleberandrade/calculadora-flutter/blob/master/LICENSE">licença MIT original</a>. As bibliotecas oficiais Material/Cupertino mantêm suas próprias licenças BSD; a licença do aplicativo não as substitui. A capa desta revisão é uma ilustração criada com auxílio de IA; as outras duas imagens são capturas reais da execução no Chrome.</p>
+<p>A primeira publicação desta aula é de 2020. A introdução histórica, imagens antigas, referências de fontes, ícones, splash e compartilhamento foram preservadas em <a href="https://github.com/kleberandrade/calculadora-flutter/blob/master/docs/classroom-original.pt-BR.md">material original de aula</a>; elas são uma referência histórica, não instruções de instalação para esta versão. Para aprofundar, consulte a documentação oficial sobre <a href="https://docs.flutter.dev/ui/assets/assets-and-images">assets e imagens</a>, <a href="https://docs.flutter.dev/ui/accessibility-and-internationalization/accessibility">acessibilidade</a> e <a href="https://docs.flutter.dev/testing/overview">testes</a>.</p>
+<h2>5 exercícios para praticar</h2>
+<ol>
+<li><strong>Tipografia com acessibilidade.</strong> Escolha uma fonte cuja licença permita uso no aplicativo e declare o asset localmente. Preserve alinhamento e leitura de 12 algarismos. Critério de conclusão: nenhuma sobreposição ou corte a 320 pixels de largura e texto ampliado em 1,8 vez; acrescente um teste de widget para um resultado longo.</li>
+<li><strong>Identidade visual e ícone.</strong> Crie um ícone próprio e substitua os assets Web, Android e iOS, preservando as dimensões exigidas e o crédito dos recursos utilizados. Critério de conclusão: manifesto Web e catálogos nativos apontam para os novos arquivos; confira o ícone no navegador, sem afirmar validação em plataformas que não executou.</li>
+<li><strong>Inicialização clara.</strong> Personalize a tela de preparação Web e os recursos de lançamento nativos. Mantenha uma ação para tentar novamente em caso de falha, sem adicionar uma espera artificial. Critério de conclusão: com a rede limitada ou um recurso ausente, a pessoa entende o que ocorreu e consegue repetir a inicialização; registre como verificou cada cenário.</li>
+<li><strong>Copiar o resultado.</strong> Adicione uma ação explícita para copiar o resultado usando Clipboard, do SDK Flutter, e confirme a ação com texto acessível. Não copie automaticamente e não ofereça um valor de erro como resultado válido. Critério de conclusão: um teste confirma o texto copiado e outro verifica o comportamento durante um erro; preserve o foco do teclado.</li>
+<li><strong>Histórico de operações.</strong> Guarde no máximo dez etapas concluídas, exibindo operação e resultado em uma área rolável. Decida e documente se AC também limpa o histórico; erros não devem virar resultados válidos. Critério de conclusão: testes cobrem ordem, limite de dez entradas, limpeza e divisão por zero; a tela continua utilizável em viewport estreito e com texto ampliado.</li>
+</ol>

@@ -1,17 +1,17 @@
 # Flutter Calculator
 
-[![Flutter 3.41.9](https://img.shields.io/badge/Flutter-3.41.9-02569B)](https://docs.flutter.dev/)
-[![Dart 3.11.5](https://img.shields.io/badge/Dart-3.11.5-0175C2)](pubspec.yaml)
+[![Flutter 3.50.0](https://img.shields.io/badge/Flutter-3.50.0-02569B)](https://docs.flutter.dev/)
+[![Dart 3.14.0](https://img.shields.io/badge/Dart-3.14.0-0175C2)](pubspec.yaml)
 [![MIT](https://img.shields.io/badge/license-MIT-green)](LICENSE)
 [![Flutter CI](https://github.com/kleberandrade/calculadora-flutter/actions/workflows/flutter.yml/badge.svg?branch=master)](https://github.com/kleberandrade/calculadora-flutter/actions/workflows/flutter.yml)
 
 A small arithmetic calculator built as a mobile-programming classroom example by **Kleber de Oliveira Andrade**. The modern edition separates arithmetic from widgets and supports touch and keyboard input in a responsive Material 3 interface. The app is in Brazilian Portuguese; this guide describes the current implementation.
 
-![Running release Web calculator](docs/screenshots/calculator-web.jpg)
+![Running release Web calculator](docs/screenshots/calculator-web-v2.jpg)
 
 ## Requirements and setup
 
-Use **Flutter 3.41.9**, including **Dart 3.11.5**, as pinned in `.flutter-version` and CI. The manifest permits Dart >=3.11.0 <4.0.0 and Flutter >=3.41.0; other versions have not been verified. Chrome is required for browser tests. No account, API key, database or external service is needed.
+Use **Flutter 3.50.0**, including **Dart 3.14.0**, as pinned in `.flutter-version` and CI. The manifest permits Dart >=3.14.0 <4.0.0 and Flutter >=3.50.0; other versions have not been verified. Chrome is required for browser tests. No account, API key, database or external service is needed.
 
 ```sh
 git clone https://github.com/kleberandrade/calculadora-flutter.git
@@ -66,11 +66,11 @@ Web output is in `build/web`. Serve it over HTTP, for example `python3 -m http.s
 
 CI (`.github/workflows/flutter.yml`, `master`) pins Flutter, enforces the lockfile, checks formatting and analysis, runs VM and Chrome tests, builds Web, and uploads a build artifact. It does not publish packages or deploy a site.
 
-Local validation passed: 15 VM tests, 15 Chrome tests, static analysis and the release Web build. The iOS simulator build remains blocked: after disk recovery, Xcode 27 lipo rejected Flutter 3.41.9’s multi-architecture verification arguments. Android build was not attempted because SDK licenses remain pending. Verified results and environment limits are recorded in [the modernization log](docs/modernization-log.md). Native device testing and screen-reader testing have not been performed. The installed crapper/dryer/mutator tools do not support Dart; no scores from those tools are claimed.
+Local validation passed: 15 VM tests, 15 Chrome tests, static analysis and the release Web build. No native build is certified for Flutter 3.50.0 in this update. Earlier iOS attempts with Flutter 3.41.9 were blocked by disk space and Xcode 27 lipo argument compatibility. Android build was not attempted because SDK licenses remain pending. Verified results and environment limits are recorded in [the modernization log](docs/modernization-log.md). Native device testing and screen-reader testing have not been performed. The installed crapper/dryer/mutator tools do not support Dart; no scores from those tools are claimed.
 
 ## Migration from the 2020 lesson
 
-The old project used Dart 2.1, auto_size_text 2.1, RaisedButton and Gradle 3.5-era configuration. The new project uses null safety, FilledButton, built-in FittedBox and current Flutter platform templates. It has no third-party runtime dependency. Keep the committed lockfile; do not copy the old Gradle 5.6 wrapper instruction into this project. iOS minimum deployment target is now 15. The original app icons and identifiers were retained. Existing `Memory.applyCommand` and `Memory.result` entry points remain; result is now read-only.
+The old project used Dart 2.1, auto_size_text 2.1, RaisedButton and Gradle 3.5-era configuration. The new project uses null safety, FilledButton, built-in FittedBox and current Flutter platform templates. Android now uses the 3.50 template configuration: AGP 9.3.1, Gradle 9.5.0 and Kotlin 2.4.20, with built-in Kotlin support. The UI now imports the official material_ui 1.11.1 package instead of the deprecated Flutter material.dart library. flutter_lints 6.0.0 is the latest stable direct development package checked; flutter_test comes from the SDK. See [the full dependency inventory](docs/dependencies.md) for all resolved versions and the two SDK-pinned exceptions. Keep the committed lockfile; do not copy the old Gradle 5.6 wrapper instruction into this project. iOS minimum deployment target is now 15. The original app icons and identifiers were retained. Existing `Memory.applyCommand` and `Memory.result` entry points remain; result is now read-only.
 
 The original tutorial is [Desenvolvimento de uma Calculadora simples com Flutter](https://medium.com/flutter-comunidade-br/desenvolvimento-de-uma-calculadora-simples-com-flutter-56106baae51), resolved from `http://bit.ly/3amM3EK`. See [the tutorial update record](docs/medium-update.pt-BR.md) for its verified publication status. The original Portuguese classroom material, screenshots, exercises, tutorial links and MIT notice are preserved in [the historical notes](docs/classroom-original.pt-BR.md).
 
