@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <base href="$FLUTTER_BASE_HREF">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Calculadora sequencial com teclado, operações básicas e módulo.">
+  <meta name="theme-color" content="#182b25">
+  <link rel="icon" type="image/png" href="favicon.png">
+  <link rel="manifest" href="manifest.json">
+  <title>Calculadora</title>
+  <style>
+    body {margin:0;background:#f4f3ec;color:#182b25;font:18px system-ui,sans-serif;}
+    #loading {min-height:100vh;display:grid;place-content:center;text-align:center;padding:0 24px;}
+    button {font:inherit;padding:12px 20px;border:0;border-radius:12px;background:#182b25;color:#f4f3ec;cursor:pointer;}
+  </style>
+</head>
+<body>
+  <div id="loading" role="status" aria-live="polite">
+    <h1>Calculadora</h1><p id="status">Preparando seu espaço para calcular…</p>
+    <button id="retry" hidden onclick="location.reload()">Tentar novamente</button>
+  </div>
+  <script src="flutter_bootstrap.js" async></script>
+</body>
+</html>
