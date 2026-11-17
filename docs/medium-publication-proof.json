@@ -1,0 +1,47 @@
+{
+  "exercises": [
+    "Tipografia com acessibilidade. Escolha uma fonte cuja licença permita uso no aplicativo e declare o asset localmente. Preserve alinhamento e leitura de 12 algarismos. Critério de conclusão: nenhuma sobreposição ou corte a 320 pixels de largura e texto ampliado em 1,8 vez; acrescente um teste de widget para um resultado longo.",
+    "Identidade visual e ícone. Crie um ícone próprio e substitua os assets Web, Android e iOS, preservando as dimensões exigidas e o crédito dos recursos utilizados. Critério de conclusão: manifesto Web e catálogos nativos apontam para os novos arquivos; confira o ícone no navegador, sem afirmar validação em plataformas que não executou.",
+    "Inicialização clara. Personalize a tela de preparação Web e os recursos de lançamento nativos. Mantenha uma ação para tentar novamente em caso de falha, sem adicionar uma espera artificial. Critério de conclusão: com a rede limitada ou um recurso ausente, a pessoa entende o que ocorreu e consegue repetir a inicialização; registre como verificou cada cenário.",
+    "Copiar o resultado. Adicione uma ação explícita para copiar o resultado usando Clipboard, do SDK Flutter, e confirme a ação com texto acessível. Não copie automaticamente e não ofereça um valor de erro como resultado válido. Critério de conclusão: um teste confirma o texto copiado e outro verifica o comportamento durante um erro; preserve o foco do teclado.",
+    "Histórico de operações. Guarde no máximo dez etapas concluídas, exibindo operação e resultado em uma área rolável. Decida e documente se AC também limpa o histórico; erros não devem virar resultados válidos. Critério de conclusão: testes cobrem ordem, limite de dez entradas, limpeza e divisão por zero; a tela continua utilizável em viewport estreito e com texto ampliado."
+  ],
+  "headings": [
+    "1. Conheça o resultado antes de escrever código",
+    "2. Prepare um ambiente reproduzível",
+    "3. Entenda o que cada package faz",
+    "4. Separe o domínio da interface",
+    "5. Defina as transições antes dos botões",
+    "6. Faça erros se tornarem estados recuperáveis",
+    "7. Conecte o estado ao Material atual",
+    "8. Verifique comportamento, não apenas aparência",
+    "Recursos, autoria e material original",
+    "5 exercícios para praticar"
+  ],
+  "images": [
+    {
+      "alt": "Ilustração conceitual de uma calculadora verde com símbolos aritméticos e o título Calculadora com Flutter.",
+      "src": "https://miro.medium.com/v2/resize:fit:700/0*qLd-fmdybf-MQDWT.png"
+    },
+    {
+      "alt": "Captura real da calculadora no Chrome: notas à esquerda, teclado à direita e resultado 0.3 para a conta 0.1 + 0.2.",
+      "src": "https://miro.medium.com/v2/resize:fit:700/0*PM0yyTuk8pRNCleL.jpg"
+    },
+    {
+      "alt": "Captura real do layout móvel no Chrome, em 390 por 844 pixels, com teclado completo e resultado 0.3.",
+      "src": "https://miro.medium.com/v2/resize:fit:390/0*fF4u4fId6jnWMv-n.jpg"
+    }
+  ],
+  "url": "https://medium.com/flutter-comunidade-br/desenvolvimento-de-uma-calculadora-simples-com-flutter-56106baae51?postPublishedType=repub",
+  "codeBlocks": [
+    "git clone https://github.com/kleberandrade/calculadora-flutter.git\ncd calculadora-flutter\nflutter --version\nflutter pub get --enforce-lockfile\nflutter run -d chrome",
+    "name: calculadora\ndescription: A keyboard-friendly sequential calculator for learning Flutter.\npublish_to: none\nversion: 2.0.0+2\nenvironment:\n  sdk: '>=3.14.0 <4.0.0'\n  flutter: '>=3.50.0'\ndependencies:\n  flutter:\n    sdk: flutter\n  material_ui: ^1.11.1\ndev_dependencies:\n  flutter_test:\n    sdk: flutter\n  flutter_lints: ^6.0.0\nflutter:\n  uses-material-design: true",
+    "async: 2.13.1\nboolean_selector: 2.1.2\ncharacters: 1.4.1\nclock: 1.1.3\ncollection: 1.19.1\ncupertino_ui: 1.1.7\nfake_async: 1.3.3\nflutter: SDK Flutter 3.50.0\nflutter_lints: 6.0.0\nflutter_localizations: SDK Flutter 3.50.0\nflutter_test: SDK Flutter 3.50.0\nintl: 0.20.3\nleak_tracker: 11.0.2\nleak_tracker_flutter_testing: 3.0.10\nleak_tracker_testing: 3.0.2\nlints: 6.1.0\nlisten: 1.0.1\nmatcher: 0.12.20\nmaterial_color_utilities: 0.13.0\nmaterial_ui: 1.11.1\nmeta: 1.19.0\npath: 1.9.1\nsky_engine: SDK Flutter 3.50.0\nsource_span: 1.10.2\nstack_trace: 1.12.2\nstream_channel: 2.1.4\nstring_scanner: 1.4.1\nterm_glyph: 1.2.2\ntest_api: 0.7.14\nvector_math: 2.4.4\nvm_service: 15.4.0",
+    "enum Operation {\n  add('+'),\n  subtract('-'),\n  multiply('x'),\n  divide('/'),\n  modulo('%');\n  const Operation(this.symbol);\n  final String symbol;\n  double calculate(double left, double right) => switch (this) {\n    add => left + right,\n    subtract => left - right,\n    multiply => left * right,\n    divide => left / right,\n    modulo => left % right,\n  };\n}\nenum EntryPhase { editing, pending, evaluated, error }",
+    "void _setOperation(Operation operation) {\n    if (_phase == EntryPhase.editing && _operation != null) _evaluate();\n    if (_phase == EntryPhase.error) return;\n    _left = double.parse(_result);\n    _operation = operation;\n    expression = '$_result ${operation.symbol}';\n    _phase = EntryPhase.pending;\n  }",
+    "void _evaluate() {\n    final operation = _operation!;\n    final right = double.parse(_result);\n    expression = '${_format(_left)} ${operation.symbol} $_result =';\n    if (right == 0 &&\n        (operation == Operation.divide || operation == Operation.modulo)) {\n      _fail('Não é possível dividir por zero.');\n      return;\n    }\n    final value = operation.calculate(_left, right);\n    if (!value.isFinite || value.abs() > 1e12) {\n      _fail('Resultado fora do limite de 10¹².');\n      return;\n    }\n    _result = _format(value);\n    _operation = null;\n    _phase = EntryPhase.evaluated;\n  }\n  void _fail(String message) {\n    error = message;\n    _operation = null;\n    _phase = EntryPhase.error;\n  }",
+    "import 'package:material_ui/material_ui.dart';\nimport 'calculator.dart';\nvoid main() => runApp(const MyApp());\nclass MyApp extends StatelessWidget {\n  const MyApp({super.key});\n  @override\n  Widget build(BuildContext context) => MaterialApp(\n    title: 'Calculadora',\n    debugShowCheckedModeBanner: false,\n    theme: ThemeData(\n      useMaterial3: true,\n      colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xff176b59)),\n      scaffoldBackgroundColor: const Color(0xfff4f3ec),\n      fontFamily: 'sans-serif',\n    ),\n    home: const Calculator(),\n  );\n}",
+    "dart format --output=none --set-exit-if-changed lib test\nflutter analyze --fatal-infos\nflutter test --coverage\nflutter test --platform chrome\nflutter build web --release --no-web-resources-cdn",
+    "python3 -m http.server 8783 --bind 127.0.0.1 --directory build/web"
+  ]
+}

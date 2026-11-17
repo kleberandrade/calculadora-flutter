@@ -1,5 +1,5 @@
 <h1>Desenvolvimento de uma Calculadora simples com Flutter</h1>
-<h2>Notas de aula do professor Kleber de Oliveira Andrade — do estado ao resultado</h2>
+<p><em>Notas de aula do professor Kleber de Oliveira Andrade — do estado ao resultado</em></p>
 <figure><img src="https://raw.githubusercontent.com/kleberandrade/calculadora-flutter/master/docs/screenshots/medium-cover-v2.png" alt="Ilustração conceitual de uma calculadora verde com símbolos aritméticos e o título Calculadora com Flutter."><figcaption>Capa ilustrativa criada com auxílio de IA para esta aula. As capturas reais do aplicativo aparecem a seguir.</figcaption></figure>
 <p>Uma calculadora parece apenas um conjunto de botões. Mas o que deve acontecer quando alguém aperta dois operadores seguidos? E quando divide por zero, apaga um número negativo ou continua uma conta depois do resultado? Essas perguntas ajudam a aprender algo que será útil em qualquer aplicativo: transformar regras de comportamento em um domínio testável e só então conectá-lo à interface.</p>
 <p>Nesta revisão de novembro de 2026, vamos trabalhar com o projeto completo e atual, sem combinar os exemplos antigos de 2020 com APIs novas. Ao final, você terá uma calculadora sequencial com decimais, troca de sinal, módulo, teclado físico e mensagens de erro que permitem recomeçar. O código mantém a autoria e a licença MIT do projeto original.</p>
@@ -21,21 +21,17 @@ flutter run -d chrome</pre>
 description: A keyboard-friendly sequential calculator for learning Flutter.
 publish_to: none
 version: 2.0.0+2
-
 environment:
   sdk: &#x27;&gt;=3.14.0 &lt;4.0.0&#x27;
   flutter: &#x27;&gt;=3.50.0&#x27;
-
 dependencies:
   flutter:
     sdk: flutter
   material_ui: ^1.11.1
-
 dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^6.0.0
-
 flutter:
   uses-material-design: true</pre>
 <p>Não é necessário instalar auto_size_text: o resultado usa FittedBox, já disponível na interface. Também não há dependência de rede, armazenamento ou autenticação. As versões foram resolvidas novamente com flutter pub upgrade, incluindo as dependências transitivas. O conjunto exato está em <a href="https://github.com/kleberandrade/calculadora-flutter/blob/master/pubspec.lock">pubspec.lock</a>.</p>
@@ -81,10 +77,8 @@ vm_service: 15.4.0</pre>
   multiply(&#x27;x&#x27;),
   divide(&#x27;/&#x27;),
   modulo(&#x27;%&#x27;);
-
   const Operation(this.symbol);
   final String symbol;
-
   double calculate(double left, double right) =&gt; switch (this) {
     add =&gt; left + right,
     subtract =&gt; left - right,
@@ -93,7 +87,6 @@ vm_service: 15.4.0</pre>
     modulo =&gt; left % right,
   };
 }
-
 enum EntryPhase { editing, pending, evaluated, error }</pre>
 <p>EntryPhase distingue quatro momentos. Em editing, estamos montando o operando. Em pending, já existe um operador esperando o próximo número. Em evaluated, há um resultado concluído. Em error, uma nova operação não pode continuar a partir de uma conta inválida. Saber a fase evita que repetir igual reaplique acidentalmente uma operação antiga.</p>
 <p>O método público applyCommand é a fronteira de entrada. Ele recebe um comando por vez, como 7, +, AC ou DEL. No caminho dos dígitos, aceita somente um algarismo ou ponto; texto arbitrário e expressões coladas não viram código executável. A interface também converte a vírgula do teclado para ponto. Não existe eval ou execução de texto digitado.</p>
@@ -129,7 +122,6 @@ enum EntryPhase { editing, pending, evaluated, error }</pre>
     _operation = null;
     _phase = EntryPhase.evaluated;
   }
-
   void _fail(String message) {
     error = message;
     _operation = null;
@@ -139,14 +131,10 @@ enum EntryPhase { editing, pending, evaluated, error }</pre>
 <h2>7. Conecte o estado ao Material atual</h2>
 <p>O ponto de entrada abaixo é o arquivo main.dart atual. Ele usa material_ui, Material 3 e construtores constantes. Não precisa mudar a orientação da tela dentro do método build:</p>
 <pre>import &#x27;package:material_ui/material_ui.dart&#x27;;
-
 import &#x27;calculator.dart&#x27;;
-
 void main() =&gt; runApp(const MyApp());
-
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
-
   @override
   Widget build(BuildContext context) =&gt; MaterialApp(
     title: &#x27;Calculadora&#x27;,

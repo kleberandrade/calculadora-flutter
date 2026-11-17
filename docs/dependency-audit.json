@@ -1,0 +1,624 @@
+{
+  "packages": [
+    {
+      "package": "async",
+      "kind": "transitive",
+      "isDiscontinued": false,
+      "replacedBy": null,
+      "isCurrentRetracted": false,
+      "isCurrentAffectedByAdvisory": false,
+      "current": {
+        "version": "2.13.1"
+      },
+      "upgradable": {
+        "version": "2.13.1"
+      },
+      "resolvable": {
+        "version": "2.13.1"
+      },
+      "latest": {
+        "version": "2.13.1"
+      }
+    },
+    {
+      "package": "boolean_selector",
+      "kind": "transitive",
+      "isDiscontinued": false,
+      "replacedBy": null,
+      "isCurrentRetracted": false,
+      "isCurrentAffectedByAdvisory": false,
+      "current": {
+        "version": "2.1.2"
+      },
+      "upgradable": {
+        "version": "2.1.2"
+      },
+      "resolvable": {
+        "version": "2.1.2"
+      },
+      "latest": {
+        "version": "2.1.2"
+      }
+    },
+    {
+      "package": "characters",
+      "kind": "transitive",
+      "isDiscontinued": false,
+      "replacedBy": null,
+      "isCurrentRetracted": false,
+      "isCurrentAffectedByAdvisory": false,
+      "current": {
+        "version": "1.4.1"
+      },
+      "upgradable": {
+        "version": "1.4.1"
+      },
+      "resolvable": {
+        "version": "1.4.1"
+      },
+      "latest": {
+        "version": "1.4.1"
+      }
+    },
+    {
+      "package": "clock",
+      "kind": "transitive",
+      "isDiscontinued": false,
+      "replacedBy": null,
+      "isCurrentRetracted": false,
+      "isCurrentAffectedByAdvisory": false,
+      "current": {
+        "version": "1.1.3"
+      },
+      "upgradable": {
+        "version": "1.1.3"
+      },
+      "resolvable": {
+        "version": "1.1.3"
+      },
+      "latest": {
+        "version": "1.1.3"
+      }
+    },
+    {
+      "package": "collection",
+      "kind": "transitive",
+      "isDiscontinued": false,
+      "replacedBy": null,
+      "isCurrentRetracted": false,
+      "isCurrentAffectedByAdvisory": false,
+      "current": {
+        "version": "1.19.1"
+      },
+      "upgradable": {
+        "version": "1.19.1"
+      },
+      "resolvable": {
+        "version": "1.19.1"
+      },
+      "latest": {
+        "version": "1.19.1"
+      }
+    },
+    {
+      "package": "cupertino_ui",
+      "kind": "transitive",
+      "isDiscontinued": false,
+      "replacedBy": null,
+      "isCurrentRetracted": false,
+      "isCurrentAffectedByAdvisory": false,
+      "current": {
+        "version": "1.1.7"
+      },
+      "upgradable": {
+        "version": "1.1.7"
+      },
+      "resolvable": {
+        "version": "1.1.7"
+      },
+      "latest": {
+        "version": "1.1.7"
+      }
+    },
+    {
+      "package": "fake_async",
+      "kind": "transitive",
+      "isDiscontinued": false,
+      "replacedBy": null,
+      "isCurrentRetracted": false,
+      "isCurrentAffectedByAdvisory": false,
+      "current": {
+        "version": "1.3.3"
+      },
+      "upgradable": {
+        "version": "1.3.3"
+      },
+      "resolvable": {
+        "version": "1.3.3"
+      },
+      "latest": {
+        "version": "1.3.3"
+      }
+    },
+    {
+      "package": "flutter",
+      "kind": "direct",
+      "isDiscontinued": false,
+      "replacedBy": null,
+      "isCurrentRetracted": false,
+      "isCurrentAffectedByAdvisory": false,
+      "current": {
+        "version": "0.0.0"
+      },
+      "upgradable": {
+        "version": "0.0.0"
+      },
+      "resolvable": {
+        "version": "0.0.0"
+      },
+      "latest": {
+        "version": "0.0.0"
+      }
+    },
+    {
+      "package": "flutter_lints",
+      "kind": "dev",
+      "isDiscontinued": false,
+      "replacedBy": null,
+      "isCurrentRetracted": false,
+      "isCurrentAffectedByAdvisory": false,
+      "current": {
+        "version": "6.0.0"
+      },
+      "upgradable": {
+        "version": "6.0.0"
+      },
+      "resolvable": {
+        "version": "6.0.0"
+      },
+      "latest": {
+        "version": "6.0.0"
+      }
+    },
+    {
+      "package": "flutter_localizations",
+      "kind": "transitive",
+      "isDiscontinued": false,
+      "replacedBy": null,
+      "isCurrentRetracted": false,
+      "isCurrentAffectedByAdvisory": false,
+      "current": {
+        "version": "0.0.0"
+      },
+      "upgradable": {
+        "version": "0.0.0"
+      },
+      "resolvable": {
+        "version": "0.0.0"
+      },
+      "latest": {
+        "version": "0.0.0"
+      }
+    },
+    {
+      "package": "flutter_test",
+      "kind": "dev",
+      "isDiscontinued": false,
+      "replacedBy": null,
+      "isCurrentRetracted": false,
+      "isCurrentAffectedByAdvisory": false,
+      "current": {
+        "version": "0.0.0"
+      },
+      "upgradable": {
+        "version": "0.0.0"
+      },
+      "resolvable": {
+        "version": "0.0.0"
+      },
+      "latest": {
+        "version": "0.0.0"
+      }
+    },
+    {
+      "package": "intl",
+      "kind": "transitive",
+      "isDiscontinued": false,
+      "replacedBy": null,
+      "isCurrentRetracted": false,
+      "isCurrentAffectedByAdvisory": false,
+      "current": {
+        "version": "0.20.3"
+      },
+      "upgradable": {
+        "version": "0.20.3"
+      },
+      "resolvable": {
+        "version": "0.20.3"
+      },
+      "latest": {
+        "version": "0.20.3"
+      }
+    },
+    {
+      "package": "leak_tracker",
+      "kind": "transitive",
+      "isDiscontinued": false,
+      "replacedBy": null,
+      "isCurrentRetracted": false,
+      "isCurrentAffectedByAdvisory": false,
+      "current": {
+        "version": "11.0.2"
+      },
+      "upgradable": {
+        "version": "11.0.2"
+      },
+      "resolvable": {
+        "version": "11.0.2"
+      },
+      "latest": {
+        "version": "11.0.2"
+      }
+    },
+    {
+      "package": "leak_tracker_flutter_testing",
+      "kind": "transitive",
+      "isDiscontinued": false,
+      "replacedBy": null,
+      "isCurrentRetracted": false,
+      "isCurrentAffectedByAdvisory": false,
+      "current": {
+        "version": "3.0.10"
+      },
+      "upgradable": {
+        "version": "3.0.10"
+      },
+      "resolvable": {
+        "version": "3.0.10"
+      },
+      "latest": {
+        "version": "3.0.10"
+      }
+    },
+    {
+      "package": "leak_tracker_testing",
+      "kind": "transitive",
+      "isDiscontinued": false,
+      "replacedBy": null,
+      "isCurrentRetracted": false,
+      "isCurrentAffectedByAdvisory": false,
+      "current": {
+        "version": "3.0.2"
+      },
+      "upgradable": {
+        "version": "3.0.2"
+      },
+      "resolvable": {
+        "version": "3.0.2"
+      },
+      "latest": {
+        "version": "3.0.2"
+      }
+    },
+    {
+      "package": "lints",
+      "kind": "transitive",
+      "isDiscontinued": false,
+      "replacedBy": null,
+      "isCurrentRetracted": false,
+      "isCurrentAffectedByAdvisory": false,
+      "current": {
+        "version": "6.1.0"
+      },
+      "upgradable": {
+        "version": "6.1.0"
+      },
+      "resolvable": {
+        "version": "6.1.0"
+      },
+      "latest": {
+        "version": "6.1.0"
+      }
+    },
+    {
+      "package": "listen",
+      "kind": "transitive",
+      "isDiscontinued": false,
+      "replacedBy": null,
+      "isCurrentRetracted": false,
+      "isCurrentAffectedByAdvisory": false,
+      "current": {
+        "version": "1.0.1"
+      },
+      "upgradable": {
+        "version": "1.0.1"
+      },
+      "resolvable": {
+        "version": "1.0.1"
+      },
+      "latest": {
+        "version": "1.0.1"
+      }
+    },
+    {
+      "package": "matcher",
+      "kind": "transitive",
+      "isDiscontinued": false,
+      "replacedBy": null,
+      "isCurrentRetracted": false,
+      "isCurrentAffectedByAdvisory": false,
+      "current": {
+        "version": "0.12.20"
+      },
+      "upgradable": {
+        "version": "0.12.20"
+      },
+      "resolvable": {
+        "version": "0.12.20"
+      },
+      "latest": {
+        "version": "0.12.20"
+      }
+    },
+    {
+      "package": "material_color_utilities",
+      "kind": "transitive",
+      "isDiscontinued": false,
+      "replacedBy": null,
+      "isCurrentRetracted": false,
+      "isCurrentAffectedByAdvisory": false,
+      "current": {
+        "version": "0.13.0"
+      },
+      "upgradable": {
+        "version": "0.13.0"
+      },
+      "resolvable": {
+        "version": "0.13.0"
+      },
+      "latest": {
+        "version": "0.13.1"
+      }
+    },
+    {
+      "package": "material_ui",
+      "kind": "direct",
+      "isDiscontinued": false,
+      "replacedBy": null,
+      "isCurrentRetracted": false,
+      "isCurrentAffectedByAdvisory": false,
+      "current": {
+        "version": "1.11.1"
+      },
+      "upgradable": {
+        "version": "1.11.1"
+      },
+      "resolvable": {
+        "version": "1.11.1"
+      },
+      "latest": {
+        "version": "1.11.1"
+      }
+    },
+    {
+      "package": "meta",
+      "kind": "transitive",
+      "isDiscontinued": false,
+      "replacedBy": null,
+      "isCurrentRetracted": false,
+      "isCurrentAffectedByAdvisory": false,
+      "current": {
+        "version": "1.19.0"
+      },
+      "upgradable": {
+        "version": "1.19.0"
+      },
+      "resolvable": {
+        "version": "1.19.0"
+      },
+      "latest": {
+        "version": "1.19.0"
+      }
+    },
+    {
+      "package": "path",
+      "kind": "transitive",
+      "isDiscontinued": false,
+      "replacedBy": null,
+      "isCurrentRetracted": false,
+      "isCurrentAffectedByAdvisory": false,
+      "current": {
+        "version": "1.9.1"
+      },
+      "upgradable": {
+        "version": "1.9.1"
+      },
+      "resolvable": {
+        "version": "1.9.1"
+      },
+      "latest": {
+        "version": "1.9.1"
+      }
+    },
+    {
+      "package": "sky_engine",
+      "kind": "transitive",
+      "isDiscontinued": false,
+      "replacedBy": null,
+      "isCurrentRetracted": false,
+      "isCurrentAffectedByAdvisory": false,
+      "current": {
+        "version": "0.0.0"
+      },
+      "upgradable": {
+        "version": "0.0.0"
+      },
+      "resolvable": {
+        "version": "0.0.0"
+      },
+      "latest": {
+        "version": "0.0.0"
+      }
+    },
+    {
+      "package": "source_span",
+      "kind": "transitive",
+      "isDiscontinued": false,
+      "replacedBy": null,
+      "isCurrentRetracted": false,
+      "isCurrentAffectedByAdvisory": false,
+      "current": {
+        "version": "1.10.2"
+      },
+      "upgradable": {
+        "version": "1.10.2"
+      },
+      "resolvable": {
+        "version": "1.10.2"
+      },
+      "latest": {
+        "version": "1.10.2"
+      }
+    },
+    {
+      "package": "stack_trace",
+      "kind": "transitive",
+      "isDiscontinued": false,
+      "replacedBy": null,
+      "isCurrentRetracted": false,
+      "isCurrentAffectedByAdvisory": false,
+      "current": {
+        "version": "1.12.2"
+      },
+      "upgradable": {
+        "version": "1.12.2"
+      },
+      "resolvable": {
+        "version": "1.12.2"
+      },
+      "latest": {
+        "version": "1.12.2"
+      }
+    },
+    {
+      "package": "stream_channel",
+      "kind": "transitive",
+      "isDiscontinued": false,
+      "replacedBy": null,
+      "isCurrentRetracted": false,
+      "isCurrentAffectedByAdvisory": false,
+      "current": {
+        "version": "2.1.4"
+      },
+      "upgradable": {
+        "version": "2.1.4"
+      },
+      "resolvable": {
+        "version": "2.1.4"
+      },
+      "latest": {
+        "version": "2.1.4"
+      }
+    },
+    {
+      "package": "string_scanner",
+      "kind": "transitive",
+      "isDiscontinued": false,
+      "replacedBy": null,
+      "isCurrentRetracted": false,
+      "isCurrentAffectedByAdvisory": false,
+      "current": {
+        "version": "1.4.1"
+      },
+      "upgradable": {
+        "version": "1.4.1"
+      },
+      "resolvable": {
+        "version": "1.4.1"
+      },
+      "latest": {
+        "version": "1.4.1"
+      }
+    },
+    {
+      "package": "term_glyph",
+      "kind": "transitive",
+      "isDiscontinued": false,
+      "replacedBy": null,
+      "isCurrentRetracted": false,
+      "isCurrentAffectedByAdvisory": false,
+      "current": {
+        "version": "1.2.2"
+      },
+      "upgradable": {
+        "version": "1.2.2"
+      },
+      "resolvable": {
+        "version": "1.2.2"
+      },
+      "latest": {
+        "version": "1.2.2"
+      }
+    },
+    {
+      "package": "test_api",
+      "kind": "transitive",
+      "isDiscontinued": false,
+      "replacedBy": null,
+      "isCurrentRetracted": false,
+      "isCurrentAffectedByAdvisory": false,
+      "current": {
+        "version": "0.7.14"
+      },
+      "upgradable": {
+        "version": "0.7.14"
+      },
+      "resolvable": {
+        "version": "0.7.14"
+      },
+      "latest": {
+        "version": "0.7.15"
+      }
+    },
+    {
+      "package": "vector_math",
+      "kind": "transitive",
+      "isDiscontinued": false,
+      "replacedBy": null,
+      "isCurrentRetracted": false,
+      "isCurrentAffectedByAdvisory": false,
+      "current": {
+        "version": "2.4.4"
+      },
+      "upgradable": {
+        "version": "2.4.4"
+      },
+      "resolvable": {
+        "version": "2.4.4"
+      },
+      "latest": {
+        "version": "2.4.4"
+      }
+    },
+    {
+      "package": "vm_service",
+      "kind": "transitive",
+      "isDiscontinued": false,
+      "replacedBy": null,
+      "isCurrentRetracted": false,
+      "isCurrentAffectedByAdvisory": false,
+      "current": {
+        "version": "15.4.0"
+      },
+      "upgradable": {
+        "version": "15.4.0"
+      },
+      "resolvable": {
+        "version": "15.4.0"
+      },
+      "latest": {
+        "version": "15.4.0"
+      }
+    }
+  ]
+}
