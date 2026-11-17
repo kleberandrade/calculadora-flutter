@@ -1,5 +1,5 @@
 import 'package:calculadora/main.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -82,9 +82,8 @@ void main() {
       await tester.pumpWidget(
         MaterialApp(
           builder: (context, child) => MediaQuery(
-            data: MediaQuery.of(
-              context,
-            ).copyWith(textScaler: TextScaler.linear(1.8)),
+            data: MediaQuery.of(context)
+                .copyWith(textScaler: TextScaler.linear(1.8)),
             child: child!,
           ),
           home: const MyApp(),
