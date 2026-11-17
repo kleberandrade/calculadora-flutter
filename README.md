@@ -1,90 +1,83 @@
 # Flutter Calculator
 
-[![Language: Dart](https://img.shields.io/badge/Language-Dart-0175C2)](https://github.com/kleberandrade/calculadora-flutter/blob/master/pubspec.yaml)
-[![Framework: Flutter](https://img.shields.io/badge/Framework-Flutter-02569B)](https://github.com/kleberandrade/calculadora-flutter/blob/master/pubspec.yaml)
+[![Flutter 3.41.9](https://img.shields.io/badge/Flutter-3.41.9-02569B)](https://docs.flutter.dev/)
+[![Dart 3.11.5](https://img.shields.io/badge/Dart-3.11.5-0175C2)](pubspec.yaml)
+[![MIT](https://img.shields.io/badge/license-MIT-green)](LICENSE)
+[![Flutter CI](https://github.com/kleberandrade/calculadora-flutter/actions/workflows/flutter.yml/badge.svg?branch=master)](https://github.com/kleberandrade/calculadora-flutter/actions/workflows/flutter.yml)
 
-Simple Flutter calculator developed as a mobile-programming classroom example.
+A small arithmetic calculator built as a mobile-programming classroom example by **Kleber de Oliveira Andrade**. The modern edition separates arithmetic from widgets and supports touch and keyboard input in a responsive Material 3 interface. The app is in Brazilian Portuguese; this guide describes the current implementation.
 
-## Getting started
+![Running release Web calculator](docs/screenshots/calculator-web.jpg)
 
-- Select a Flutter release whose bundled Dart SDK satisfies the manifest constraint, then run the commands below from the repository root.
+## Requirements and setup
+
+Use **Flutter 3.41.9**, including **Dart 3.11.5**, as pinned in `.flutter-version` and CI. The manifest permits Dart >=3.11.0 <4.0.0 and Flutter >=3.41.0; other versions have not been verified. Chrome is required for browser tests. No account, API key, database or external service is needed.
 
 ```sh
-flutter pub get
-flutter run
+git clone https://github.com/kleberandrade/calculadora-flutter.git
+cd calculadora-flutter
+flutter --version
+flutter pub get --enforce-lockfile
+flutter run -d chrome
 ```
 
-- If the app depends on Firebase or another external service, configure your own service project using the dependencies and original notes; credentials are not supplied by this guide.
+For Android, install Android Studio, JDK 17 or newer (the local installation uses 21), and the SDK requested by Flutter. Review and accept SDK licenses yourself when required. For iOS, use macOS and Xcode; the project targets **iOS 15+**. Application identifiers remain `com.example.calculadora`; configure your own identity and release signing before distributing a native app. Android release configuration currently uses the template's debug signing, suitable only for local evaluation.
 
-## Recorded requirements
+## Use and examples
 
-- Dart SDK constraint from [`pubspec.yaml`](https://github.com/kleberandrade/calculadora-flutter/blob/master/pubspec.yaml): `>=2.1.0 <3.0.0`.
+- Tap the keys or type digits and `+`, `-`, `*`/`x`, `/`, `%`, `.` or `,` (keyboard comma maps to a decimal point).
+- Enter or `=` evaluates; Escape or Delete clears all; Backspace removes an input digit; F9 or `±` changes the sign. Tab and Space retain normal button navigation/activation.
+- The teaching chips run safe local examples: `0.1 + 0.2 = 0.3` and `8 mod 3 = 2`.
+- Evaluation is **left to right**: `2 + 3 × 4 = 20`. This is a sequential calculator, without parentheses or operator precedence.
+- `%` preserves the original **Euclidean modulo** operation, not a percentage: `8 % 3 = 2`; `-8 % 3 = 1`.
+- Pressing another operator before the right operand replaces the pending operator. Equals with no right operand and repeated equals are no-ops. A digit after a result starts a new calculation; an operator continues that result.
+- AC resets everything. DEL after a completed result clears it; while entering a number, it removes one digit. DEL after a pending operator begins editing a zero right operand.
+- Division/modulo by zero and results beyond magnitude 10¹² show a recoverable error. Enter a number, change sign, use DEL or AC to recover. Operators cannot reuse an error state.
 
-## Repository map
+Input is limited to 12 digits per operand, excluding sign/decimal point. Arithmetic uses Dart `double`, formats committed results to **12 significant digits**, and normalizes negative zero after calculation. Each next operation uses that rounded result. Recurring fractions such as `1 / 3` display `0.333333333333`; very small values may use scientific notation and can underflow to zero. This is an educational calculator, not an exact financial or arbitrary-precision engine. Arbitrary strings and expression pastes are rejected at the command boundary; no eval/exec is used.
 
-- [lib](https://github.com/kleberandrade/calculadora-flutter/tree/master/lib)
-- [test](https://github.com/kleberandrade/calculadora-flutter/tree/master/test)
-- [android](https://github.com/kleberandrade/calculadora-flutter/tree/master/android)
-- [ios](https://github.com/kleberandrade/calculadora-flutter/tree/master/ios)
+The display exposes a live semantic result, controls have descriptive labels and at least 48 logical pixel targets, and short screens scroll instead of clipping controls. At wide widths, teaching notes sit beside the keypad. An empty calculation shows “Pronto para calcular”; no asynchronous operation exists inside the calculator. Web startup provides loading and retry feedback.
 
-## Validation status
+## Architecture
 
-This update documents the tracked source and project metadata. It does not certify a successful build, device test or compatibility with a current toolchain. Follow any project-specific validation instructions in the original material.
+- `lib/memory.dart`: framework-free `Memory` domain, `Operation` enum and `EntryPhase` state machine. `applyCommand` validates a single command; the operation enum performs arithmetic; the UI reads result, expression and error.
+- `lib/calculator.dart`: stateful presentation, responsive layout, sample commands and keyboard-to-command mapping. No arithmetic is duplicated here.
+- `lib/main.dart`: application entry point, theme and navigation root.
+- `test/memory_test.dart`: arithmetic, sequential rules, precision, input validation, signs, limits and recovery.
+- `test/widget_test.dart`: touch/keyboard behavior and layouts at narrow, landscape and desktop sizes with 1.8× text.
+- `web/`: browser host, startup feedback and platform metadata. `android/` and `ios/` contain current SDK scaffolding.
 
-## License and attribution
+Glossary: **entry** is the operand being edited; **pending** means an operator is waiting for a right operand; **evaluated** is a completed result; **error** prevents further operations until input is reset. State is held in memory only and resets on restart. The expression line shows the current/last step, not a persistent history.
 
-No standalone repository-wide license file was identified in this review. Preserve the original credits and any component-specific licenses; this documentation update grants no additional rights.
+## Tests and builds
 
----
+```sh
+dart format --output=none --set-exit-if-changed lib test
+flutter analyze --fatal-infos
+flutter test --coverage
+flutter test --platform chrome
+flutter build web --release --no-web-resources-cdn
+# Optional native checks, after setting up the corresponding platform:
+flutter build apk --debug
+flutter build ios --simulator --no-codesign
+```
 
-## Original project material
+Web output is in `build/web`. Serve it over HTTP, for example `python3 -m http.server 8783 --bind 127.0.0.1 --directory build/web`; then open `http://127.0.0.1:8783`. Use `--base-href /your-path/` when building for a subdirectory. The renderer resources are included in the build. This command does not deploy anything.
 
-# Calculadora
+CI (`.github/workflows/flutter.yml`, `master`) pins Flutter, enforces the lockfile, checks formatting and analysis, runs VM and Chrome tests, builds Web, and uploads a build artifact. It does not publish packages or deploy a site.
 
-Aplicativo de uma calculadora simples para disciplina de Programação Mobile, criado por Kleber de Oliveira Andrade
+Local validation passed: 15 VM tests, 15 Chrome tests, static analysis and the release Web build. The iOS simulator build remains blocked: after disk recovery, Xcode 27 lipo rejected Flutter 3.41.9’s multi-architecture verification arguments. Android build was not attempted because SDK licenses remain pending. Verified results and environment limits are recorded in [the modernization log](docs/modernization-log.md). Native device testing and screen-reader testing have not been performed. The installed crapper/dryer/mutator tools do not support Dart; no scores from those tools are claimed.
 
-Tutorial de criação deste app: http://bit.ly/3amM3EK
+## Migration from the 2020 lesson
 
-<p align="center">
-    <img src="https://miro.medium.com/max/1188/1*lmJYUZewi8iDqJxplhsB5A.png" width="250"/>
-    <img src="https://miro.medium.com/max/1188/1*wd0_FiEC_XbBAu_FjeUBVA.png" width="250"/>
-    <img src="https://miro.medium.com/max/1188/1*28KOKtKidXh0KN3TmVpoCw.png" width="250"/>
-</p>
+The old project used Dart 2.1, auto_size_text 2.1, RaisedButton and Gradle 3.5-era configuration. The new project uses null safety, FilledButton, built-in FittedBox and current Flutter platform templates. It has no third-party runtime dependency. Keep the committed lockfile; do not copy the old Gradle 5.6 wrapper instruction into this project. iOS minimum deployment target is now 15. The original app icons and identifiers were retained. Existing `Memory.applyCommand` and `Memory.result` entry points remain; result is now read-only.
 
-## Como clonar e importar
+The original tutorial is [Desenvolvimento de uma Calculadora simples com Flutter](https://medium.com/flutter-comunidade-br/desenvolvimento-de-uma-calculadora-simples-com-flutter-56106baae51), resolved from `http://bit.ly/3amM3EK`. See [the tutorial update record](docs/medium-update.pt-BR.md) for its verified publication status. The original Portuguese classroom material, screenshots, exercises, tutorial links and MIT notice are preserved in [the historical notes](docs/classroom-original.pt-BR.md).
 
-*   Faça um fork do projeto (precisa ter uma conta no github)
-*   Abra o terminal do Visual Studio Code
-*   Acesse a pasta onde deseja salvar o aplicativo e digite: git clone *link_do_projeto_no_seu_github* **calculadora**
-*   Clique em File --> Open e abra o projeto
-*   Não se esqueça de abrir o arquivo pubspec.yaml e salvar (CTRL + S) o arquivo para que os plugins sejam baixados
+## Classroom extensions
 
-## Desafio para aula
+Try adding a bounded calculation history, a custom licensed font, an app-specific icon, or a share action. See the original notes for the historical links; any new plugin must be checked against the current SDK and its license. A useful exercise is changing sequential evaluation to precedence-aware parsing with tests first.
 
-*   [ ] Trocar a fonte do resultado ([tutorial](https://flutter.dev/docs/cookbook/design/fonts) e [fonte](https://www.dafont.com/pt/calculator.font))
-*   [ ] Criar um icone para o aplicativo ([plugin flutter_launcher_icons](https://pub.dev/packages/flutter_launcher_icons), [tutorial](https://medium.com/@psyanite/how-to-add-app-launcher-icons-in-flutter-bd92b0e0873a), [gerador de icone](https://romannurik.github.io/AndroidAssetStudio/icons-launcher.html))
-*   [ ] Criar uma tela de splash ([tutorial](https://morioh.com/p/98894cc3a48d))
-*   [ ] Adicionar um botão na AppBar para compartilhar o aplicativo ([IconButton](https://medium.com/@mirmahfuz/playing-with-flutter-appbar-a5362428d13d), [plugin share](https://pub.dev/packages/share))
-*   [ ] Criar um [Text](https://api.flutter.dev/flutter/widgets/Text-class.html) em cima do resultado para exibir todas as operações realizadas (10 + 30 + 20 x 10) 
+## License and credits
 
-## Licença
-
-    Copyright 2020 Kleber de Oliveira Andrade
-    
-    Permission is hereby granted, free of charge, to any person obtaining a copy
-    of this software and associated documentation files (the "Software"), to deal
-    in the Software without restriction, including without limitation the rights
-    to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    copies of the Software, and to permit persons to whom the Software is
-    furnished to do so, subject to the following conditions:
-    
-    The above copyright notice and this permission notice shall be included in all
-    copies or substantial portions of the Software.
-    
-    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    SOFTWARE.
+[MIT](LICENSE), copyright 2020 Kleber de Oliveira Andrade, extracted without changing its terms from the original README. Flutter and its SDK/transitive packages retain their own licenses. No third-party tutorial, font or image is relicensed by this repository. The original screenshots and author credits remain in the historical classroom material.
